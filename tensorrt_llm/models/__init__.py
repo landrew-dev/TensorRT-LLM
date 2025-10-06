@@ -31,6 +31,8 @@ from .deepseek_v2.model import DeepseekV2ForCausalLM
 from .dit.model import DiT
 from .eagle.model import EagleForCausalLM
 from .enc_dec.model import DecoderModel, EncoderModel, WhisperEncoder
+from .fastconformer.config import FastConformerConfig
+from .fastconformer.model import FastConformerEncoder
 from .falcon.config import FalconConfig
 from .falcon.model import FalconForCausalLM, FalconModel
 from .gemma.config import (GEMMA2_ARCHITECTURE, GEMMA3_ARCHITECTURE,
@@ -118,6 +120,8 @@ __all__ = [
     'PretrainedConfig',
     'PretrainedModel',
     'WhisperEncoder',
+    'FastConformerConfig',
+    'FastConformerEncoder',
     'MambaForCausalLM',
     'MambaConfig',
     'MPTForCausalLM',

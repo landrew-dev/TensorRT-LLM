@@ -61,7 +61,12 @@ class FastConformerConfig(PretrainedConfig):
         self.bias = bias
 
         super().__init__(
+            architecture=architecture,
             dtype=dtype,
+            hidden_size=hidden_size,
+            num_hidden_layers=num_hidden_layers,
+            num_attention_heads=num_attention_heads,
+            norm_epsilon=norm_epsilon,
             mapping=mapping,
             quantization=quantization,
             **kwargs,

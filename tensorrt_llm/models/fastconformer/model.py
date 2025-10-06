@@ -19,7 +19,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from ...module import Module
+from ...module import Module, ModuleList
 from ...layers import LayerNorm, ColumnLinear
 from ...mapping import Mapping
 from .config import FastConformerConfig
@@ -265,7 +265,7 @@ class FastConformerEncoder(Module):
         self.mapping = config.mapping if isinstance(config.mapping, Mapping) else Mapping()
 
         self.sub = StreamingSubsample8x(config)
-        self.layers = nn.ModuleList(
+        self.layers = ModuleList(
             [FastConformerEncoderLayer(config, i) for i in range(config.num_hidden_layers)]
         )
         self.ln_out = LayerNorm(normalized_shape=config.hidden_size,
