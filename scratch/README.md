@@ -107,12 +107,41 @@ python scripts/build_wheel.py --clean
 pip install ./build/tensorrt_llm-*.whl
 ```
 
-run commands:
+setup commands:
 ```
 export HOME=/home/scratch.jdaw_coreai/landrew
-export CUDA_HOME=$HOME/cuda-12.8
+CMAKE_VER=3.30.4
+ARCH=x86_64
+export PATH="$HOME/opt/cmake-${CMAKE_VER}-linux-${ARCH}/bin:$PATH"
+
+export CUDA_HOME=$HOME/cuda-12.9
 export PATH=$CUDA_HOME/bin:$PATH
 export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
+
+export NCCL_ROOT=$HOME/nccl/nccl_2.28.3-1+cuda13.0_x86_64
+export CMAKE_PREFIX_PATH=$NCCL_ROOT
+export CPATH=$NCCL_ROOT/include:$CPATH
+export LD_LIBRARY_PATH=$NCCL_ROOT/lib:$LD_LIBRARY_PATH
+
+export TENSORRT_ROOT=$HOME/tensorrt/TensorRT-10.13.3.9
+export LD_LIBRARY_PATH=$TENSORRT_ROOT/lib:$LD_LIBRARY_PATH
+export CMAKE_PREFIX_PATH=$TENSORRT_ROOT:$CMAKE_PREFIX_PATH
+
+export UCX_CMAKE_DIR="$HOME/ucx/lib/cmake/ucx"
+export ucx_DIR="$HOME/ucx/lib/cmake/ucx"
+export LD_LIBRARY_PATH=$HOME/ucx/lib:$LD_LIBRARY_PATH
+
+export CUDA_HOME=$HOME/cuda-12.9
+export PATH=$CUDA_HOME/bin:$PATH
+export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
+
+export PKG_CONFIG_PATH="$HOME/zmq/lib/pkgconfig:$PKG_CONFIG_PATH"
+export LD_LIBRARY_PATH="$HOME/zmq/lib:$LD_LIBRARY_PATH"
+export LIBRARY_PATH="$HOME/zmq/lib:$LIBRARY_PATH"
+```
+
+run commands:
+```
 crun -i -q "gpu.product_name=*H100_NVL* and cpu.arch=x86_64 and gpus=1 and gpu.memory_total_gb>40" -t 10:00:00
 TORCH_CUDA_ARCH_LIST="9.0" mpirun -np 1 python bench.py
 ```
