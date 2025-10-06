@@ -55,6 +55,8 @@ mkdir -p $HOME/nccl && cd $HOME/nccl
 # wget https://developer.nvidia.com/downloads/compute/machine-learning/nccl/secure/2.28.3/agnostic/x64/nccl_2.28.3-1+cuda13.0_x86_64.txz
 tar xvf nccl_2.28.3-1+cuda13.0_x86_64.txz
 export NCCL_ROOT=$HOME/nccl/nccl_2.28.3-1+cuda13.0_x86_64
+export CMAKE_PREFIX_PATH=$NCCL_ROOT
+export CPATH=$NCCL_ROOT/include:$CPATH
 export LD_LIBRARY_PATH=$NCCL_ROOT/lib:$LD_LIBRARY_PATH
 
 # install tensorrt
@@ -65,7 +67,7 @@ mkdir -p $HOME/tensorrt && cd $HOME/tensorrt
 tar -xvf TensorRT-10.*.tar.gz
 export TENSORRT_ROOT=$HOME/tensorrt/TensorRT-10.13.3.9
 export LD_LIBRARY_PATH=$TENSORRT_ROOT/lib:$LD_LIBRARY_PATH
-export CMAKE_PREFIX_PATH=$TENSORRT_ROOT
+export CMAKE_PREFIX_PATH=$TENSORRT_ROOT:$CMAKE_PREFIX_PATH
 
 # ucx
 cd $HOME
@@ -98,6 +100,7 @@ cmake --build . -j
 cmake --install .
 export PKG_CONFIG_PATH="$HOME/zmq/lib/pkgconfig:$PKG_CONFIG_PATH"
 export LD_LIBRARY_PATH="$HOME/zmq/lib:$LD_LIBRARY_PATH"
+export LIBRARY_PATH="$HOME/zmq/lib:$LIBRARY_PATH"
 
 cd $HOME/TensorRT-LLM
 python scripts/build_wheel.py --clean
